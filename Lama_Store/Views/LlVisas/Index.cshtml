@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Lama_Store.Models.LlVisa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VisaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisaPass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisaBalance)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisaPass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisaBalance)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VisaId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VisaId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VisaId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,36 @@
+﻿@model Lama_Store.Models.LlVisa
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>LlVisa</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VisaName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VisaName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VisaPass)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VisaPass)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VisaBalance)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VisaBalance)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VisaId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

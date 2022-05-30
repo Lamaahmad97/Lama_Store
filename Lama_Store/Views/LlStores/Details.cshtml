@@ -1,0 +1,36 @@
+﻿@model Lama_Store.Models.LlStore
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>LlStore</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StoreName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StoreName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagePathS)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImagePathS)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.StoreId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

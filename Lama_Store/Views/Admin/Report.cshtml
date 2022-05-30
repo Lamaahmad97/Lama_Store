@@ -1,0 +1,139 @@
+﻿@model Tuple<IEnumerable<JoinTables>, IEnumerable<LlProductOrder>>
+
+    @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+
+<link href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+<div class="p-3 mb-2 bg-secondary text-white">Search</div>
+<br />
+<form asp-action="Report" method="post">
+    <input class="form-control" name="startDate" type="date" />
+    <input class="form-control" name="endDate" type="date" />
+    <button class="btn" type="submit">Search</button>
+</form>
+
+<table class="T table">
+    <thead>
+        <tr>
+
+
+            @*<th>
+                    User Name
+                </th>*@
+            <th>
+                ProductName
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Item2)
+        {
+            <tr style="background-color:bisque">
+
+
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Users.UserFname)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateFrom)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Total Quantity</td>
+            <td>@ViewBag.TotalQuantity </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Total Price</td>
+            <td style="color:red">@ViewBag.TotalPrice </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<br />
+<div class="p-3 mb-2 bg-secondary text-white">Join Tables</div>
+<br />
+
+<table class="T table">
+    <thead>
+        <tr>
+            <th style="font-size: large">user Name </th>
+            <th style="font-size: large">Product Name </th>
+            <th style="font-size: large">Category Name </th>
+            <th style="font-size: large">Product Price</th>
+            <th style="font-size: large">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Item1)
+        {
+
+            <tr>
+                <td>@item.users.UserFname</td>
+                <td style="background-color:lightgreen">@item.Product.ProductName</td>
+                <td>@item.order.OrderName</td>
+                <td>@item.Product.ProductPrice</td>
+                <td>@item.ordpro.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js" defer></script>
+
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js" defer></script>
+<script>
+    $(document).ready(function () {
+        $('.T').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

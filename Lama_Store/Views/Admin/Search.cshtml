@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Lama_Store.Models.LlProductOrder>
+@{
+    Layout = "_Layout";
+
+}
+
+<br />
+<br />
+<br />
+<form asp-action="Search" method="post">
+    <input class="form-control" name="startDate" type="date" />
+    <input class="form-control" name="endDate" type="date" />
+    <button class="btn" type="submit">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.OrderName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateFrom)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
