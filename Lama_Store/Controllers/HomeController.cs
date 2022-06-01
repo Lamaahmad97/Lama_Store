@@ -42,6 +42,7 @@ namespace Lama_Store.Controllers
             return View(products);
 
         }
+       
 
 
 
