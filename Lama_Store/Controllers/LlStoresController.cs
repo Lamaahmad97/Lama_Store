@@ -88,7 +88,7 @@ namespace Lama_Store.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.LlCategories, "CategoryId", "CategoryId", llStore.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.LlCategories, "CategoryId", "CategoryName", llStore.CategoryId);
             return View(llStore);
         }
 

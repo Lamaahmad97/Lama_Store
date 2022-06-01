@@ -1,0 +1,99 @@
+﻿@using Lama_Store.Controllers
+@model IEnumerable<NewClass>
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    decimal? Total = 5;
+}
+
+
+<section class="checkout_area section_padding">
+    <div class="container">
+      <div class="returning_customer">
+     
+        
+      </div>
+      
+      <div class="billing_details">
+        <div class="row">
+          <div class="col-lg-8">
+            <h3>Billing Details</h3>
+            <form asp-action="SendEmail" asp-controller="LlOrders" class="row contact_form" method="post">
+              <div class="col-md-6 form-group p_star">
+                <input type="text" class="form-control" id="Email" name="Email" />
+                <span class="placeholder" data-placeholder="Email Address"></span>
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <input type="text" class="form-control" id="add1" name="add1" />
+                <span class="placeholder" data-placeholder="Address line 01"></span>
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <input type="text" class="form-control" id="city" name="city" />
+                <span class="placeholder" data-placeholder="Town/City"></span>
+              </div>
+              <div class="col-md-12 form-group">
+                <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" />
+              </div>
+               <input type="submit" id="submit-form" class="hidden" hidden />
+            </form>
+          </div>
+          <div class="col-lg-4">
+            <div class="order_box">
+              <h2>Your Order</h2>
+              <ul class="list">
+                <li>
+                  <a>Product
+                    <span>Total</span>
+                  </a>
+                </li>
+                @foreach(var item in Model){
+                   Total += @item.ProductPrice;
+                   <li>
+                  <a asp-action="SinglePage" asp-controller="LiProducts" asp-route-id="@item.ProductId">@item.ProductName
+                    <span class="middle">x01</span>
+                    <span class="last">@item.ProductPrice</span>
+                    
+                  </a>
+                </li>}
+              </ul>
+              <ul class="list list_2">
+                <li>
+                  <a>Subtotal
+                    <span>$@Total
+                    </span>
+                  </a>
+              </ul>
+              <div class="payment_item">
+                <div class="radion_btn">
+                  <input type="radio" id="f-option5" name="selector" />
+                  <label for="f-option5">Check payments</label>
+                  <div class="check"></div>
+                </div>
+                <p>
+                  Send Email with information of Order
+                </p>
+              </div>
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input type="radio" id="f-option6" name="selector" />
+                  <label for="f-option6">Paypal </label>
+                  <img src="img/product/single-product/card.jpg" alt="" />
+                  <div class="check"></div>
+                </div>
+                <p>
+                  Please send a check to Store Name, Store Street, Store Town,
+                  Store State / County, Store Postcode.
+                </p>
+              </div>
+              <div class="creat_account">
+                <input type="checkbox" id="f-option4" name="selector" />
+                <label for="f-option4">I’ve read and accept the </label>
+                <a href="#">terms & conditions*</a>
+              </div>
+               <label for="submit-form" tabindex="0" class="button123 btn_3">Submit</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

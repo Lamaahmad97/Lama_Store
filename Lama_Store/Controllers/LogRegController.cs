@@ -43,8 +43,13 @@ namespace Lama_Store.Controllers
                     switch (auth.RoleId)
                     {
                         case 1: // role = customer 
-                            HttpContext.Session.SetInt32("UserId", (int)auth.UserId);
-                            return RedirectToAction("ViewandUpdate", "Home");
+                            HttpContext.Session.SetInt32("UserI d", (int)auth.UserId);
+                           var result = _context.LlUsers.Where(x => x.UserId == auth.UserId).SingleOrDefault();
+                            HttpContext.Session.SetString("Fname", result.UserFname);
+                            HttpContext.Session.SetString("Lname", result.UserLname);
+                            HttpContext.Session.SetString("Picture", result.ImagePath);
+
+                            return RedirectToAction("Index", "Home");
                         case 2: // role = Admin
                             HttpContext.Session.SetString("AdminName", auth.UserName);
                             HttpContext.Session.SetString("AdminPassword", auth.LoginPass);

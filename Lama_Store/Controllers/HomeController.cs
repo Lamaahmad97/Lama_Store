@@ -1,4 +1,5 @@
 ﻿using Lama_Store.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,7 +13,7 @@ namespace Lama_Store.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ModelContext _context; // بعرفه انه انا رح اتعامل مع الداتا بيس 
+        private readonly ModelContext _context;
 
 
         public HomeController(ILogger<HomeController> logger, ModelContext context)
@@ -26,6 +27,16 @@ namespace Lama_Store.Controllers
 
         public IActionResult Index()
         {
+            int? user = HttpContext.Session.GetInt32("UserId");
+            if (user == null) {
+                int? CartCount = _context.LlOrders.Where(x => x.UserId == user).Count();
+                if (CartCount == 0 || CartCount == null)
+                    ViewBag.CartCount = 0;
+                else {
+                    ViewBag.CartCount = CartCount;
+                }
+            }
+
             var categories = _context.LlCategories.ToList();
             return View(categories);
         }

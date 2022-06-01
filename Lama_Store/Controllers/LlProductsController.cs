@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Lama_Store.Models;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Lama_Store.Controllers
 {
@@ -32,12 +33,38 @@ namespace Lama_Store.Controllers
 
         public  IActionResult SinglePage(int id)
         {
+            int? user = HttpContext.Session.GetInt32("UserId");
+            if (user == null)
+            {
+                int? CartCount = _context.LlOrders.Where(x => x.UserId == user).Count();
+                if (CartCount == 0 || CartCount == null)
+                    ViewBag.CartCount = 0;
+                else
+                {
+                    ViewBag.CartCount = CartCount;
+                }
+            }
             var modelContext = _context.LlProducts.Where(l => l.ProductId == id).ToList();
             return View(modelContext);
         }
 
-        public async Task<IActionResult> Sales()
+        public async Task<IActionResult> Sales(decimal? id)
         {
+            int? user = HttpContext.Session.GetInt32("UserId");
+            if (user == null)
+            {
+                int? CartCount = _context.LlOrders.Where(x => x.UserId == user).Count();
+                if (CartCount == 0 || CartCount == null)
+                    ViewBag.CartCount = 0;
+                else
+                {
+                    ViewBag.CartCount = CartCount;
+                }
+            }
+            if (id != null) {
+                var result = _context.LlProducts.Where(x=>x.StoreId == (int)id);
+                return View(await result.ToListAsync());
+            }
             var modelContext = _context.LlProducts.Include(l => l.Store);
             return View(await modelContext.ToListAsync());
         }
@@ -98,7 +125,7 @@ namespace Lama_Store.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["StoreId"] = new SelectList(_context.LlStores, "StoreId", "StoreId", llProduct.StoreId);
+            ViewData["StoreId"] = new SelectList(_context.LlStores, "StoreId", "StoreName", llProduct.StoreId);
             return View(llProduct);
         }
 

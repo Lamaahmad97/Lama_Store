@@ -27,8 +27,11 @@ namespace Lama_Store
         {
             services.AddDbContext<ModelContext>(options =>
             options.UseOracle(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(60);
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.IsEssential = true;
             });
             services.AddControllersWithViews();
             services.AddRazorPages();

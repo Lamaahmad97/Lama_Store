@@ -9,10 +9,7 @@ namespace Lama_Store.Models
 {
     public partial class LlProduct
     {
-        public LlProduct()
-        {
-            LlProductOrders = new HashSet<LlProductOrder>();
-        }
+       
 
         public decimal ProductId { get; set; }
         public string ProductName { get; set; }

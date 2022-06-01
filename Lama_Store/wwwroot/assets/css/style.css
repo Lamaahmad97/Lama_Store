@@ -28,6 +28,7 @@
 /*-------------   Color variabel  --------------*/
 @import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,500,600,700,800|Poppins:400,500,600,700|Yellowtail&display=swap");
 /* line 37, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_color.scss */
+
 .white-bg {
   background: #ffffff;
 }
@@ -3707,26 +3708,26 @@ input:focus {
 }
 
 /* line 224, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_headerMenu.scss */
-.header-bottom .header-right .shopping-card::before {
-  position: absolute;
-  content: "02";
-  width: 25px;
-  height: 25px;
-  background: #00b1ff;
-  color: #fff;
-  line-height: 25px;
-  text-align: center;
-  border-radius: 30px;
-  font-size: 12px;
-  top: 0px;
-  right: -6px;
-  -webkit-transition: all 0.2s ease-out 0s;
-  -moz-transition: all 0.2s ease-out 0s;
-  -ms-transition: all 0.2s ease-out 0s;
-  -o-transition: all 0.2s ease-out 0s;
-  transition: all 0.2s ease-out 0s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
+    .header-bottom .header-right .shopping-card::before {
+        position: absolute;
+        content: attr(data-before);
+        width: 25px;
+        height: 25px;
+        background: #00b1ff;
+        color: #fff;
+        line-height: 25px;
+        text-align: center;
+        border-radius: 30px;
+        font-size: 12px;
+        top: 0px;
+        right: -6px;
+        -webkit-transition: all 0.2s ease-out 0s;
+        -moz-transition: all 0.2s ease-out 0s;
+        -ms-transition: all 0.2s ease-out 0s;
+        -o-transition: all 0.2s ease-out 0s;
+        transition: all 0.2s ease-out 0s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
 
 /* line 240, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_headerMenu.scss */
 .header-bottom .header-right .shopping-card i {

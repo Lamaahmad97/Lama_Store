@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lama_Store.Models;
+using Microsoft.AspNetCore.Http;
+using System.Net.Mail;
+using System.Net;
+using EASendMail;
 
 namespace Lama_Store.Controllers
 {
@@ -44,6 +48,120 @@ namespace Lama_Store.Controllers
 
             return View(llOrder);
         }
+        public async Task<IActionResult> AddToCart(int id)
+        {
+            LlProduct resultItem = _context.LlProducts.Where(x => x.ProductId == id).SingleOrDefault();
+            LlOrder order = new LlOrder();
+            order.OrderName = resultItem.ProductName;
+            order.UserId = HttpContext.Session.GetInt32("UserId");
+            _context.Add(order);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Sales","LlProducts");
+        }
+
+        public IActionResult ViewCart() {
+            int? currentUser = HttpContext.Session.GetInt32("UserId");
+
+            var result = _context.LlOrders.Where(x => x.UserId == currentUser);
+            var result2 = _context.LlProducts.Where(x => x.ProductId > 0);
+            var eventsQry = from Or in result
+                            join Pr in result2 on Or.OrderName equals Pr.ProductName
+                            where Or.OrderName == Pr.ProductName select new NewClass(Or.OrderName, 
+                            Pr.ImagePathP,
+                            Pr.ProductCost,
+                            Pr.ProductPrice,
+                            Pr.ProductId
+                            ); 
+            return View(eventsQry.ToList());    
+        }
+
+        public IActionResult Checkout()
+        {
+            int? currentUser = HttpContext.Session.GetInt32("UserId");
+
+            var result = _context.LlOrders.Where(x => x.UserId == currentUser);
+            var result2 = _context.LlProducts.Where(x => x.ProductId > 0);
+            var eventsQry = from Or in result
+                            join Pr in result2 on Or.OrderName equals Pr.ProductName
+                            where Or.OrderName == Pr.ProductName
+                            select new NewClass(Or.OrderName,
+                            Pr.ImagePathP,
+                            Pr.ProductCost,
+                            Pr.ProductPrice,
+                            Pr.ProductId
+            );
+            return View(eventsQry.ToList());
+        }
+
+
+        [HttpPost]
+        public IActionResult SendEmail(string add1,string city,string zip, string Email)
+        {
+            int? currentUser = HttpContext.Session.GetInt32("UserId");
+
+            var result = _context.LlOrders.Where(x => x.UserId == currentUser).ToList();
+            string items = "";
+            for (int i = 0; i < result.Count(); i++) {
+                items += " 1x "+ result.ElementAt(i) + "\r\n ";
+            }
+            string message = "Thank you for your purchase from EStore \r\n" +
+                "Your order is as follows:\r\n" + items +
+                " Which will be Delived to \r\n add1";
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    SmtpMail oMail = new SmtpMail("TryIt");
+
+                    // Your email address
+                    oMail.From = "khaledxz150@hotmail.com";
+
+                    // Set recipient email address
+                    oMail.To = Email;
+
+                    // Set email subject
+                    oMail.Subject = "Purchase from EStore";
+
+                    // Set email body
+                    oMail.TextBody = message;
+
+                    // Hotmail/Outlook SMTP server address
+                    SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+                    // If your account is office 365, please change to Office 365 SMTP server
+                    // SmtpServer oServer = new SmtpServer("smtp.office365.com");
+
+                    // User authentication should use your
+                    // email address as the user name.
+                    oServer.User = "khaledxz150@hotmail.com";
+
+                    // If you got authentication error, try to create an app password instead of your user password.
+                    // https://support.microsoft.com/en-us/account-billing/using-app-passwords-with-apps-that-don-t-support-two-step-verification-5896ed9b-4263-e681-128a-a6f2979a7944
+                    oServer.Password = "-=Shmnga7bsh";
+
+                    // use 587 TLS port
+                    oServer.Port = 587;
+
+                    // detect SSL/TLS connection automatically
+                    oServer.ConnectType = SmtpConnectType.ConnectSSLAuto;
+
+
+                    EASendMail.SmtpClient oSmtp = new EASendMail.SmtpClient();
+                    oSmtp.SendMail(oServer, oMail);
+                    return RedirectToAction("index","Home");
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Some Error";
+            }
+            return View();
+        }
+
+
+
 
         // GET: LlOrders/Create
         public IActionResult Create()
@@ -160,6 +278,39 @@ namespace Lama_Store.Controllers
         private bool LlOrderExists(decimal id)
         {
             return _context.LlOrders.Any(e => e.OrderId == id);
+        }
+    }
+
+    public class NewClass
+    {
+        public string ProductName { get; }
+        public string Image { get; }
+        public decimal? ProductCost { get; }
+        public decimal? ProductPrice { get; }
+        public decimal ProductId { get; }   
+        public NewClass(string productName, string image, decimal? productCost, decimal? productPrice,
+            decimal ProductId)
+        {
+            ProductName = productName;
+            Image = image;
+            ProductCost = productCost;
+            ProductPrice = productPrice;
+            this.ProductId = ProductId;
+
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is NewClass other &&
+                   ProductName == other.ProductName &&
+                   Image == other.Image &&
+                   ProductCost == other.ProductCost &&
+                   ProductPrice == other.ProductPrice;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ProductName, Image, ProductCost, ProductPrice);
         }
     }
 }
