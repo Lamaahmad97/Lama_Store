@@ -29,6 +29,8 @@ namespace Lama_Store.Controllers
             return View(await _context.LlCategories.ToListAsync());
         }
 
+
+
         // GET: LlCategories/Details/5
         public async Task<IActionResult> Details(decimal? id)
         {

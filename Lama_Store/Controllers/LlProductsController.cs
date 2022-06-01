@@ -30,6 +30,17 @@ namespace Lama_Store.Controllers
             return View(await modelContext.ToListAsync());
         }
 
+        public  IActionResult SinglePage(int id)
+        {
+            var modelContext = _context.LlProducts.Where(l => l.ProductId == id).ToList();
+            return View(modelContext);
+        }
+
+        public async Task<IActionResult> Sales()
+        {
+            var modelContext = _context.LlProducts.Include(l => l.Store);
+            return View(await modelContext.ToListAsync());
+        }
         // GET: LlProducts/Details/5
         public async Task<IActionResult> Details(decimal? id)
         {
