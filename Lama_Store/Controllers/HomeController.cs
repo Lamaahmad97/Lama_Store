@@ -21,6 +21,14 @@ namespace Lama_Store.Controllers
             _logger = logger;
             _context = context;
         }
+        public IActionResult ContactUs() {
+        return View();
+        }
+        public IActionResult AboutUs()
+        {
+            (LlAboutu, IEnumerable<LlTestimonial>,IEnumerable<LlUser>) t2 = (_context.LlAboutus.OrderByDescending(x => x.AboutusId).FirstOrDefault(), _context.LlTestimonials.Where(o => o.Status == "True"), _context.LlUsers.Select(o => o));
+            return View(t2);    
+        }
 
 
 

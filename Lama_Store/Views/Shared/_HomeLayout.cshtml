@@ -67,16 +67,13 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a asp-controller="Home" asp-action="index">Home</a></li>
-                                            <li><a asp-controller="LlProducts" asp-action="Sales" >Catagori</a></li>
+                                            <li><a asp-controller="LlProducts" asp-action="Sales" asp-route-id="null" >Catagori</a></li>
                                             <li>
-                                                <a href="blog.html">Blog</a>
-                                                <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                </ul>
+                                                <a asp-controller="Home" asp-action="AboutUs">About Us </a>
+                                               
                                             </li>
                                             
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a asp-action="ContactUs" asp-controller="Home">Contact Us</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -116,55 +113,9 @@
                     </div>
                 </div>
             </div>
-         <div class="slider-area ">
         <!-- Mobile Menu -->
-        <div class="slider-active">
-            <div class="single-slider slider-height" data-background="~\assets\img\hero\slide-05.jpg">
-                <div class="container">
-                    <div class="row d-flex align-items-center justify-content-between">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
-                            <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-                                <img src="assets/img/hero/hero_man.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
-                            <div class="hero__caption">
-                                <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
-                                <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br> Collection</h1>
-                                <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
-                                <!-- Hero-btn -->
-                                <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
-                                    <a asp-controller="LlProducts" asp-action="Sales" class="btn hero-btn">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="single-slider slider-height" data-background="assets/img/hero/h1_hero.jpg">
-                <div class="container">
-                    <div class="row d-flex align-items-center justify-content-between">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 d-none d-md-block">
-                            <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-                                <img src="assets/img/hero/hero_man.png" alt="">
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-8">
-                            <div class="hero__c aption">
-                                <span data-animation="fadeInRight" data-delay=".4s">60% Discount</span>
-                                <h1 data-animation="fadeInRight" data-delay=".6s">Winter <br> Collection</h1>
-                                <p data-animation="fadeInRight" data-delay=".8s">Best Cloth Collection By 2020!</p>
-                                <!-- Hero-btn -->
-                                <div class="hero__btn" data-animation="fadeInRight" data-delay="1s">
-                                    <a asp-controller="LlProducts" asp-action="Sales" class="btn hero-btn">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+       
+
         <!-- Header End -->
     </header>
 
@@ -197,10 +148,8 @@
                             <div class="footer-tittle">
                                 <h4>Quick Links</h4>
                                 <ul>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#"> Offers & Discounts</a></li>
-                                    <li><a href="#"> Get Coupon</a></li>
-                                    <li><a href="#">  Contact Us</a></li>
+                                  
+                                    <li><a asp-action="ContactUs" asp-controller="LlContactUs">  Contact Us</a></li>
                                 </ul>
                             </div>
                         </div>

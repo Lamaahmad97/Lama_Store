@@ -72,10 +72,9 @@ namespace Lama_Store.Controllers
                             Pr.ProductCost,
                             Pr.ProductPrice,
                             Pr.ProductId
-                            ); 
-            return View(eventsQry.ToList());    
+                            );
+            return View(eventsQry.ToList());
         }
-
         public IActionResult Checkout()
         {
             int? currentUser = HttpContext.Session.GetInt32("UserId");
@@ -139,7 +138,7 @@ namespace Lama_Store.Controllers
 
                     // If you got authentication error, try to create an app password instead of your user password.
                     // https://support.microsoft.com/en-us/account-billing/using-app-passwords-with-apps-that-don-t-support-two-step-verification-5896ed9b-4263-e681-128a-a6f2979a7944
-                    oServer.Password = "-=Shmnga7bsh";
+                    oServer.Password = "";
 
                     // use 587 TLS port
                     oServer.Port = 587;

@@ -1,21 +1,27 @@
-﻿using System;
+﻿using Lama_Store.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Lama_Store.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lama_Store.Controllers
 {
     public class LlTestimonialsController : Controller
     {
         private readonly ModelContext _context;
+        private readonly IWebHostEnvironment _webHostEnviroment;
 
-        public LlTestimonialsController(ModelContext context)
+        public LlTestimonialsController(ModelContext context, IWebHostEnvironment webHostEnviroment)
         {
             _context = context;
+            _webHostEnviroment = webHostEnviroment; //مشان اوصل للباث تاع w3
+
         }
 
         // GET: LlTestimonials
@@ -68,6 +74,32 @@ namespace Lama_Store.Controllers
             return View(llTestimonial);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateUser([Bind("TestimonialId,Message,Status,BgImagePath,UserId")] LlTestimonial llTestimonial, IFormFile ImageFile)
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                RedirectToAction("Login", "LogReg");
+            }
+            llTestimonial.Status = "false";
+            llTestimonial.UserId = HttpContext.Session.GetInt32("UserId");
+            string w3rootpath = _webHostEnviroment.WebRootPath;//C:\Users\d.kanaan.ext\Desktop\Rest\Rest\wwwroot\
+                                                               //Guid.newguid : generate unique string before image name                                           ////2- generate image name and add unique string
+            string fileName = Guid.NewGuid().ToString() + "_" + ImageFile.FileName;//96522555_img1.jpg //ex : affscdw5635edvcywydfew_Aseel.jpg
+                                                                                         //3- path
+            string path = Path.Combine(w3rootpath + "/Image/" + fileName);//C:\Users\d.kanaan.ext\Desktop\Rest\Rest\wwwroot\images/96522555_img1 .jpg
+                                                                          //4-create Image inside image file in w3root folder
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await ImageFile.CopyToAsync(fileStream);
+            }
+            llTestimonial.BgImagePath = fileName;
+            _context.Add(llTestimonial);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
+
+        }
         // GET: LlTestimonials/Edit/5
         public async Task<IActionResult> Edit(decimal? id)
         {

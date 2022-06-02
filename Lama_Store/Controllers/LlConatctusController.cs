@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lama_Store.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Lama_Store.Controllers
 {
@@ -23,6 +24,11 @@ namespace Lama_Store.Controllers
         {
             var modelContext = _context.LlConatctus.Include(l => l.User);
             return View(await modelContext.ToListAsync());
+        }
+
+        public IActionResult ContactUs()
+        {
+            return RedirectToAction("ContactUs", "Home");
         }
 
         // GET: LlConatctus/Details/5
@@ -58,11 +64,16 @@ namespace Lama_Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ContactusId,Namee,Email,Message,UserId")] LlConatctu llConatctu)
         {
+            int? user = HttpContext.Session.GetInt32("UserId");
+            if (user != null)
+            {
+                llConatctu.UserId = user;
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(llConatctu);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","Home");
             }
             ViewData["UserId"] = new SelectList(_context.LlUsers, "UserId", "UserId", llConatctu.UserId);
             return View(llConatctu);

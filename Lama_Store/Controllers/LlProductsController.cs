@@ -62,7 +62,7 @@ namespace Lama_Store.Controllers
                 }
             }
             if (id != null) {
-                var result = _context.LlProducts.Where(x=>x.StoreId == (int)id);
+                var result = _context.LlProducts.Where(x=>x.StoreId == (int)id).Include(i => i.Store);
                 return View(await result.ToListAsync());
             }
             var modelContext = _context.LlProducts.Include(l => l.Store);

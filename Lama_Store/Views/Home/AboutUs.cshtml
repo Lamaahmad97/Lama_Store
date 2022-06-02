@@ -1,0 +1,226 @@
+﻿@model (LlAboutu, IEnumerable<Lama_Store.Models.LlTestimonial>,IEnumerable<Lama_Store.Models.LlUser>)
+@using Microsoft.AspNetCore.Http
+
+
+
+@{  ViewData["Title"] = "About Us";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+        int? id = Context.Session.GetInt32("UserId");
+
+
+
+}
+<!-- product list part start-->
+    <section class="about_us padding_top">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="about_us_content">
+                        <div class="about_us_video">
+                            <img src="~/assets/img/about_us_video.png" alt="#" class="img-fluid">
+                            <a class="about_video_icon popup-youtube" href="https://www.youtube.com/watch?v=DWHB6nTyKDI"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product list part end-->
+
+    <!-- feature part here -->
+    <section class="feature_part section_padding">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-6">
+                    <div class="feature_part_tittle">
+                        <h3>Credibly innovate granular
+                        internal or organic sources
+                        whereas standards.</h3>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="feature_part_content">
+                            <p>@Model.Item1.Descriptionn</p>
+                    
+                </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="~/assets/img/icon/feature_icon_1.svg" alt="#">
+                        <h4>Credit Card Support</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="~/assets/img/icon/feature_icon_2.svg" alt="#">
+                        <h4>Online Order</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="~/assets/img/icon/feature_icon_3.svg" alt="#">
+                        <h4>Free Delivery</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single_feature_part">
+                        <img src="~/assets/img/icon/feature_icon_4.svg" alt="#">
+                        <h4>Product with Gift</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- feature part end -->
+    
+    <!-- client review part here -->
+    <section class="client_review">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="client_review_slider owl-carousel">
+                        @foreach(var item in Model.Item2){
+                        <div class="single_client_review">
+                            <div class="client_img">
+                            <img src=@Url.Content("~/Image/" + item.BgImagePath) asp-append-version="true" style="border-radius:20%;"/>
+                            </div>
+                            <p>@item.Message</p>
+                            <h5>- @item.UserId</h5>
+                        </div>}
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@if (id != null)
+{<section class="contact-section">
+            <div class="container">
+    <div class="row">
+        <div class="col-12">
+                        <h2 class="contact-title">Tell us your experience</h2>
+                    </div>
+                    <div class="col-lg-8">
+                        <form class="form-contact contact_form" asp-action="CreateUser" asp-controller="LlTestimonials" method="post" id="contactForms" novalidate="novalidate" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control w-100" name="Message" id="Message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Your Testimony"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control valid" name="ImageFile" id="ImageFile" type="file" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'" placeholder="file">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <button type="submit" class="button button-contactForm boxed-btn">Send</button>
+                            </div>
+                        </form>
+                    </div>
+    </div>
+        </div>
+</section>
+}
+else
+{<section class="contact-section">
+            <div class="container">
+     <div class="row">
+        <div class="col-12">
+                        <h2 class="contact-title">Login to Tell us about your Experience!!
+                        </h2>
+                    </div>
+                                        </div>
+
+            </div>
+</section>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- client review part end -->
+
+    <!-- subscribe part here -->
+    <section class="subscribe_part section_padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="subscribe_part_content">
+                        <h2>Get promotions & updates!</h2>
+                        <p>Seamlessly empower fully researched growth strategies and interoperable internal or “organic” sources credibly innovate granular internal .</p>
+                        <div class="subscribe_form">
+                            <input type="email" placeholder="Enter your mail">
+                            <a href="#" class="btn_1">Subscribe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- subscribe part end -->
